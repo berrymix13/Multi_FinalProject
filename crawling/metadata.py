@@ -4,7 +4,9 @@ with open('user_id_pw.json') as f:
     insta = json.load(f)
 user_id = insta['user_id']
 user_pw = insta['user_pw']
-
+tag = []
+upload_id = []
+img_url = []
 user_id=user_id 
 user_pw=user_pw
 wish_num=3
