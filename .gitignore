@@ -1,8 +1,8 @@
 # MJ add
 practice.ipynb
 user_id_pw.json
-
-
+image/
+*.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
