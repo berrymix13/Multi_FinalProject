@@ -3,6 +3,12 @@ practice.ipynb
 user_id_pw.json
 image/
 *.csv
+*.jpg
+*.zip
+
+
+
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
