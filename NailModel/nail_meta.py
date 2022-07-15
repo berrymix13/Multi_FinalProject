@@ -49,9 +49,9 @@ def find_point(image):
                 # Inference gesture
                 data = np.array([angle], dtype=np.float32)
         
-                mp_drawing.draw_landmarks(img_copy, res, mp_hands.HAND_CONNECTIONS, 
-                                        mp_drawing.DrawingSpec(color=(112, 146, 190), thickness=20, circle_radius=10), 
-                                        mp_drawing.DrawingSpec(color=(153, 217, 234), thickness=20, circle_radius=10))
+                # mp_drawing.draw_landmarks(img_copy, res, mp_hands.HAND_CONNECTIONS, 
+                #                         mp_drawing.DrawingSpec(color=(112, 146, 190), thickness=20, circle_radius=10), 
+                #                         mp_drawing.DrawingSpec(color=(153, 217, 234), thickness=20, circle_radius=10))
                 return img_copy, point, index
             
             else:
@@ -64,7 +64,7 @@ def find_point(image):
 
 # 각 손가락의 각도에 맞게 1자로 세우는 함수
 def rotation_finger(img, point):
-    plt.figure(figsize=(15, 6))
+    # plt.figure(figsize=(15, 6))
     for num, idx in enumerate(range(4,21,4)):
         A = point[idx]; B = point[idx-1]; D = point[idx-3]
 
@@ -81,9 +81,9 @@ def rotation_finger(img, point):
         img_copy = img.copy()
         matrix = cv2.getRotationMatrix2D(globals()['center{}'.format(num)], globals()['degree{}'.format(num)], scale=1)
         globals()['hand{}'.format(num)] = cv2.warpAffine(img_copy, matrix, (img_copy.shape[1], img_copy.shape[0]))
-        plt.subplot(2, 5, num+1);
-        plt.axis('off')
-        plt.imshow(globals()['hand{}'.format(num)])       
+        # plt.subplot(2, 5, num+1);
+        # plt.axis('off')
+        # plt.imshow(globals()['hand{}'.format(num)])       
 
         globals()['pt{}_x1'.format(num)] = int(globals()['center{}'.format(num)][0] - globals()['dist{}'.format(num)]*0.7)
         globals()['pt{}_y1'.format(num)] = int(globals()['center{}'.format(num)][1] - globals()['dist{}'.format(num)]*1.5)
@@ -95,21 +95,21 @@ def rotation_finger(img, point):
         if globals()['pt{}_x2'.format(num)] > img.shape[1]:
             globals()['pt{}_x2'.format(num)] = img.shape[1]
 
-        print(globals()['pt{}_y1'.format(num)], globals()['pt{}_y2'.format(num)], globals()['pt{}_x1'.format(num)], globals()['pt{}_x2'.format(num)])
+        # print(globals()['pt{}_y1'.format(num)], globals()['pt{}_y2'.format(num)], globals()['pt{}_x1'.format(num)], globals()['pt{}_x2'.format(num)])
 
         globals()['img{}'.format(num)] = globals()['hand{}'.format(num)][globals()['pt{}_y1'.format(num)]:globals()['pt{}_y2'.format(num)], 
                                                     globals()['pt{}_x1'.format(num)]:globals()['pt{}_x2'.format(num)]]             # [y범위, x범위]
 
-        print(globals()['img{}'.format(num)].shape)
+        # print(globals()['img{}'.format(num)].shape)
 
-        plt.subplot(2, 5, 5+num+1)
-        plt.axis('off')
-        plt.imshow(globals()['img{}'.format(num)]);
+        # plt.subplot(2, 5, 5+num+1)
+        # plt.axis('off')
+        # plt.imshow(globals()['img{}'.format(num)]);
         
         
 # 마스크 이미지를 원본 이미지의 좌표에 맞춰 회전, 자르기
 def rotation_mask(mask, point):
-    plt.figure(figsize=(15, 6))
+    # plt.figure(figsize=(15, 6))
     for num, idx in enumerate(range(4,21,4)):
         A = point[idx]; B = point[idx-1]; D = point[idx-3]
 
@@ -126,9 +126,9 @@ def rotation_mask(mask, point):
         mask_copy = mask.copy()
         matrix = cv2.getRotationMatrix2D(globals()['center{}'.format(num)], globals()['degree{}'.format(num)], scale=1)
         mask_copy = cv2.warpAffine(mask_copy,matrix, (mask_copy.shape[1], mask_copy.shape[0]))
-        plt.subplot(2, 5, num+1);
-        plt.axis('off')
-        plt.imshow(mask_copy);
+        # plt.subplot(2, 5, num+1);
+        # plt.axis('off')
+        # plt.imshow(mask_copy);
 
         globals()['pt{}_x1'.format(num)] = int(globals()['center{}'.format(num)][0] - globals()['dist{}'.format(num)]*0.7)
         globals()['pt{}_y1'.format(num)] = int(globals()['center{}'.format(num)][1] - globals()['dist{}'.format(num)]*1.5)
@@ -149,9 +149,9 @@ def rotation_mask(mask, point):
             row[:div5] = 0
             row[div5*4:] = 0
 
-        plt.subplot(2, 5, 5+num+1)
-        plt.axis('off')
-        plt.imshow(globals()['mask{}'.format(num)]);
+        # plt.subplot(2, 5, 5+num+1)
+        # plt.axis('off')
+        # plt.imshow(globals()['mask{}'.format(num)]);
     return mask0, mask1, mask2, mask3, mask4
 
 
@@ -201,13 +201,13 @@ def rot_crop_box(img, contours):
       croppedRotated = cv2.getRectSubPix(cropped, (int(croppedW*mult), int(croppedH*mult)), (size[0]/2, size[1]/2))
       crop_img.append(croppedRotated)
 
-      plt.subplot(1, len(contours), i+1)
-      plt.imshow(croppedRotated)
+    #   plt.subplot(1, len(contours), i+1)
+    #   plt.imshow(croppedRotated)
       break
       # plt.show()
     
-  plt.imshow(img_box)
-  plt.show()
+#   plt.imshow(img_box)
+#   plt.show()
   return croppedRotated
 
 
@@ -244,7 +244,22 @@ def nail_pts(img):
             if low_point[1] < i[1]:
                 low_point = i
         if len(left_point) == 0 or len(right_point) == 0:
-            num += 1
+            num -= 1
         else:
             break
     return low_point, left_point[0], right_point[0]
+
+
+
+
+def Contours(img):
+    mask =img.copy()
+    b,g,r = cv2.split(mask)
+    merged_img = cv2.merge([r,g,b])
+    edge = cv2.dilate(merged_img, None)
+    blur = cv2.GaussianBlur(merged_img, ksize = (3, 3), sigmaX = 0)
+    edged = cv2.Canny(blur, 200, 255)       # 경계선 따기
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+    closed = cv2.morphologyEx(edged, cv2.MORPH_CLOSE, kernel)
+    Contours, _ = cv2.findContours(closed.copy(),cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    return Contours
