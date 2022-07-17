@@ -155,21 +155,34 @@ def rotation_mask(mask, point):
     return mask0, mask1, mask2, mask3, mask4
 
 
-def rot_crop_box(img, contours):  
-  global crop_img, img_box
+def rot_crop_box(img):  
+  global crop_img, img_box, angle_lst ,angle_lst2, cenetr_lst
+  '''
+  마스크 이미지를 넣으면 손톱 5개 마스크가 들어있는 `0-4 리스트` 리턴
+  '''
 
-  mult = 1.2  # 자르는 이미지 비율, 1: 딱 맞게 자르기
+
+  mult = 1.5  # 자르는 이미지 비율, 1: 딱 맞게 자르기
   # img_box = cv2.cvtColor(img5.copy(), cv2.COLOR_GRAY2BGR)
   img_box = img.copy()
+  crop_list = []
 
-  crop_img = [] # 자른 이미지 담을 리스트 
+  edge = cv2.dilate(img_box, None)
+  blur = cv2.GaussianBlur(edge, ksize = (3, 3), sigmaX = 0)
+  edged = cv2.Canny(blur, 200, 255)       # 경계선 따기
+  kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+  closed = cv2.morphologyEx(edged, cv2.MORPH_CLOSE, kernel) 
+  contours, _ = cv2.findContours(closed.copy(),cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)      
+
+  crop_img, angle_lst = [], []    # 자른 이미지 담을 리스트 , 변환 전 좌표 
+  angle_lst2, cenetr_lst = [], []  # 변환 후 좌표, 각 객체 중심 좌표
   for i, cnt in enumerate(contours):
-      rect = cv2.minAreaRect(cnt)
+      rect = cv2.minAreaRect(cnt) 
       box = cv2.boxPoints(rect)
       box = np.int0(box)
-    #   cv2.drawContours(img_box, [box], 0, (0,255,0), 2) # 박스 그리기
+      # cv2.drawContours(img_box, [box], 0, (0,255,0), 2) # 박스 그리기
 
-      W = rect[1][0]
+      W = rect[1][0] 
       H = rect[1][1]
 
       Xs = [i[0] for i in box]
@@ -179,17 +192,22 @@ def rot_crop_box(img, contours):
       y1 = min(Ys)
       y2 = max(Ys)
 
-      rotated = False
-      angle = rect[2]
+      angle = rect[2] # 각도
+      angle_lst.append(angle)
 
-      if angle < -45:
-          angle+=90
+      if angle == 90: # 90도이면 0도로 변경 
+          angle-=90
           rotated = True
+      else:
+        rotated = False
+        
+      angle_lst2.append(angle)
 
       center = (int((x1+x2)/2), int((y1+y2)/2))
       size = (int(mult*(x2-x1)),int(mult*(y2-y1)))
       # cv2.circle(img_box, center, 10, (0,255,0), -1) # 가운데 점 그리기
-
+      cenetr_lst.append(center)
+      
       M = cv2.getRotationMatrix2D((size[0]/2, size[1]/2), angle, 1.0)
 
       cropped = cv2.getRectSubPix(img_box, size, center)    
@@ -198,17 +216,9 @@ def rot_crop_box(img, contours):
       croppedW = W if not rotated else H 
       croppedH = H if not rotated else W
 
-      croppedRotated = cv2.getRectSubPix(cropped, (int(croppedW*mult), int(croppedH*mult)), (size[0]/2, size[1]/2))
-      crop_img.append(croppedRotated)
-
-    #   plt.subplot(1, len(contours), i+1)
-    #   plt.imshow(croppedRotated)
-      break
-      # plt.show()
-    
-#   plt.imshow(img_box)
-#   plt.show()
-  return croppedRotated
+      croppedRotated = cv2.getRectSubPix(cropped, (int(croppedW*mult), int(croppedH*mult)), (size[0]/2, size[1]/2)) 
+      crop_list.append(croppedRotated)
+  return crop_list
 
 
 def nail_pts(img):
