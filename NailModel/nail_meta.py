@@ -256,3 +256,50 @@ def Contours(img):
     closed = cv2.morphologyEx(edged, cv2.MORPH_CLOSE, kernel)
     Contours, _ = cv2.findContours(closed.copy(),cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     return Contours
+
+
+
+
+
+
+
+
+
+def pts_box(img):
+    '''
+    이미지 입력하면 좌표를 빼내주는 함수
+    순서대로 아래, 왼쪽, 오른쪽의 좌표값을 리턴한다
+    
+    '''
+    # 이미지 좌표 추출
+    img_color = img
+    img_gray = cv2.cvtColor(img_color, cv2.COLOR_BGR2GRAY)
+    ret, img_binary = cv2.threshold(img_gray, 100, 255, 0)
+    contours, hierarchy = cv2.findContours(img_binary, cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_SIMPLE)
+    lst = []
+    for cnt in contours:
+        for i in range(len(cnt)):
+            lst.append(cnt[i][0])
+
+    left_point = [9999,9999]
+    right_point = [0,0]
+    num = 0
+    top_point = [9999,9999]
+    low_point = [0,0]
+    while True:
+        
+        for i in lst:
+            # y값 중간 지점에서 출발
+            if top_point[1] > i[1]:
+                top_point = i
+            if low_point[1] < i[1]:
+                low_point = i
+            if left_point[0] > i[0]:
+                left_point = i
+            if right_point[0] < i[0]:
+                right_point = i
+        if len(left_point) == 0 or len(top_point) == 0 or len(low_point) == 0 or len(right_point) == 0:
+            num += 1
+        else:
+            break
+    return top_point, left_point, right_point, low_point
