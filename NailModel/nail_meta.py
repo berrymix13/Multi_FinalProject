@@ -141,14 +141,14 @@ def rotation_mask(mask, point):
     return mask0, mask1, mask2, mask3, mask4
 
 
-def rot_crop_box(img):  
+def rot_crop_box(img, mult=1):
     global crop_img, img_box, angle_lst ,angle_lst2, cenetr_lst
     '''
     마스크 이미지를 넣으면 손톱 5개 마스크가 들어있는 `0-4 리스트` 리턴
     '''
 
 
-    mult = 1.5  # 자르는 이미지 비율, 1: 딱 맞게 자르기
+    mult = mult  # 자르는 이미지 비율, 1: 딱 맞게 자르기
     img_box = img.copy()
     crop_list = []
 
