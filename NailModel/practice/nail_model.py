@@ -61,16 +61,18 @@ def fit_nail(hand_raw: str, hand_mask: str, design: str) -> np.ndarray :
 
         mtrx2 = cv2.getPerspectiveTransform(final_before, final_after)
         dst2 = cv2.warpPerspective(resized_dst, mtrx2, (cols, rows))
-        output=cv2.subtract(raw_hand, dst2)
-        output2 = cv2.cvtColor(cv2.add(output,dst2),cv2.COLOR_BGR2RGB)
+        dst3 = np.where(dst2>5, 255, dst2)
+        output=cv2.subtract(raw_hand, dst3)
+        output2 = cv2.add(output,dst2)
         raw_hand = output2.copy()
     return output2
     
     
 if __name__ == "__main__":
-    rt = fit_nail("hand_raw.jpg", "hand_mask.jpg", "design1" )
+    rt = fit_nail("hand_raw.jpg", "hand_mask.jpg", "design5" )
+    
     cv2.namedWindow("show", cv2.WINDOW_NORMAL)
     cv2.resizeWindow("show",400,800)
-    cv2.imshow("show",cv2.cvtColor(rt,cv2.COLOR_BGR2RGB))
+    cv2.imshow("show",rt)
     key = cv2.waitKey(0)
     cv2.destroyAllWindows()
