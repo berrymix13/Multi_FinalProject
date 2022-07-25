@@ -28,9 +28,6 @@ def fit_nail(hand_raw: str, hand_mask: str, design: str) -> np.ndarray :
             print(f"손톱 검출 개수 이상!\n필요개수: 5 \n현재: {count_err}")
             return None
         dst = cv2.imread(f"{fdir}/design/{design_name}/design{num}.jpg")
-        # dst = brightness(dst, raw_hand)
-        # top_point, left_point, right_point, low_point = pts_box(dst)
-        # point1 , point2, point3, point4 = [left_point[0],top_point[1]], [right_point[0],top_point[1]], [right_point[0],low_point[1]], [left_point[0],low_point[1]]
         raw_mask_ct = Contours(raw_mask)
 
         dst_ct = Contours(dst)
@@ -62,15 +59,18 @@ def fit_nail(hand_raw: str, hand_mask: str, design: str) -> np.ndarray :
         mtrx2 = cv2.getPerspectiveTransform(final_before, final_after)
         dst2 = cv2.warpPerspective(resized_dst, mtrx2, (cols, rows))
         dst3 = np.where(dst2>5, 255, dst2)
-        output=cv2.subtract(raw_hand, dst3)
+        # 네일 색이 어두우면 dst3로 subtract
+        if dst2.mean() < 0.55:
+            output=cv2.subtract(raw_hand, dst3)
+        else:
+            output=cv2.subtract(raw_hand, dst2)
         output2 = cv2.add(output,dst2)
         raw_hand = output2.copy()
     return output2
     
     
 if __name__ == "__main__":
-    rt = fit_nail("hand_raw.jpg", "hand_mask.jpg", "design5" )
-    
+    rt = fit_nail("hand_raw.jpg", "hand_mask.jpg", "design2" )
     cv2.namedWindow("show", cv2.WINDOW_NORMAL)
     cv2.resizeWindow("show",400,800)
     cv2.imshow("show",rt)
