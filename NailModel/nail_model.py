@@ -10,7 +10,7 @@ def fit_nail(hand_raw: str, hand_mask: str, design: str) -> np.ndarray :
     design                  ->      사용자 선택 네일 디자인 명 (영어)\n
     '''
     
-    fdir = "C:/workspace/05.FinalProject/Multi_FinalProject/NailModel/practice"
+    fdir = "C:/workspace/05.FinalProject/Multi_FinalProject/NailModel"
     raw_hand = cv2.imread(f"{fdir}/{hand_raw}", cv2.IMREAD_UNCHANGED)
     raw_mask = cv2.imread(f"{fdir}/{hand_mask}")
     rows, cols = raw_hand.shape[:2]
@@ -18,16 +18,16 @@ def fit_nail(hand_raw: str, hand_mask: str, design: str) -> np.ndarray :
     nBottom = int(rows*0.04)
     nLeft = int(cols*0.04)
     nRight = int(cols*0.04)
-    design_name = design
+    nail_img = cv2.imread(f"{fdir}/design/design1/nail.jpg")
+    crop_nail_img = rot_crop_box3(nail_img)
     
 
-    for num in range(5):
+    for num, dst in enumerate([i for i in crop_nail_img if i.shape[0]+i.shape[1] > 300]):
         crop_list = rot_crop_box3(raw_mask)
         if len(crop_list) != 5:
             count_err = len(crop_list)
             print(f"손톱 검출 개수 이상!\n필요개수: 5 \n현재: {count_err}")
             return None
-        dst = cv2.imread(f"{fdir}/design/{design_name}/design{num}.jpg")
         raw_mask_ct = Contours(raw_mask)
 
         dst_ct = Contours(dst)
