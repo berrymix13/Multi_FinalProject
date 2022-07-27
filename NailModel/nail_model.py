@@ -19,11 +19,12 @@ def fit_nail(hand_raw: str, hand_mask: str, design: str) -> np.ndarray :
     nBottom = int(rows*0.04)
     nLeft = int(cols*0.04)
     nRight = int(cols*0.04)
-    nail_img = cv2.imread(f"{fdir}/design/design1/nail.jpg")
+    nail_img = cv2.imread(f"{fdir}/design/{design}/nail.jpg")
     crop_nail_img = rot_crop_box3(nail_img)
+    crop_nail_img = [i for i in crop_nail_img if i is not None]
     
 
-    for num, dst in enumerate([i for i in crop_nail_img if i.shape[0]+i.shape[1] > 300]):
+    for num, dst in enumerate([i for i in crop_nail_img if i.shape[0]+i.shape[1] > (nail_img.shape[0]+nail_img.shape[1])/7]):
         crop_list = rot_crop_box3(raw_mask)
         if len(crop_list) != 5:
             count_err = len(crop_list)
@@ -39,9 +40,6 @@ def fit_nail(hand_raw: str, hand_mask: str, design: str) -> np.ndarray :
         resized_dst = ISOLATED.copy()
         
         resized_dst = cv2.resize(resized_dst,(raw_hand.shape[1],raw_hand.shape[0]))
-
-        top_point, left_point, right_point, low_point = pts_box(resized_dst)
-        point1 , point2, point3, point4 = [left_point[0],top_point[1]], [right_point[0],top_point[1]], [right_point[0],low_point[1]], [left_point[0],low_point[1]]
 
         cnt = raw_mask_ct[num]
         # Rotated Rectangle
@@ -66,10 +64,10 @@ def fit_nail(hand_raw: str, hand_mask: str, design: str) -> np.ndarray :
             output=cv2.subtract(raw_hand, dst2)
         output2 = cv2.add(output,dst2)
         raw_hand = output2.copy()
-    return output2
+    return raw_hand
 
 if __name__ == "__main__":
-    rt = fit_nail("hand_raw.jpg", "hand_mask.jpg", "design3" )
+    rt = fit_nail("design/ppt_hand.jpg", "design/ppt_hand_mask.jpg", "design_wint")
     cv2.namedWindow("show", cv2.WINDOW_NORMAL)
     cv2.resizeWindow("show",400,800)
     cv2.imshow("show",rt)
