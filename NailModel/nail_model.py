@@ -13,6 +13,7 @@ def fit_nail(hand_raw: str, hand_mask: str, design: str) -> np.ndarray :
     fdir = "C:/workspace/05.FinalProject/Multi_FinalProject/NailModel"
     raw_hand = cv2.imread(f"{fdir}/{hand_raw}", cv2.IMREAD_UNCHANGED)
     raw_mask = cv2.imread(f"{fdir}/{hand_mask}")
+    raw_mask = cv2.resize(raw_mask, (raw_hand.shape[1],raw_hand.shape[0]))
     rows, cols = raw_hand.shape[:2]
     nTop = int(rows*0.009)
     nBottom = int(rows*0.04)
@@ -30,7 +31,6 @@ def fit_nail(hand_raw: str, hand_mask: str, design: str) -> np.ndarray :
             return None
         raw_mask_ct = Contours(raw_mask)
 
-        dst_ct = Contours(dst)
         resized_dst = cv2.resize(dst,(raw_hand.shape[1],raw_hand.shape[0]))
         
         # 사이즈 조절부
@@ -67,10 +67,9 @@ def fit_nail(hand_raw: str, hand_mask: str, design: str) -> np.ndarray :
         output2 = cv2.add(output,dst2)
         raw_hand = output2.copy()
     return output2
-    
-    
+
 if __name__ == "__main__":
-    rt = fit_nail("hand_raw.jpg", "hand_mask.jpg", "design2" )
+    rt = fit_nail("hand_raw.jpg", "hand_mask.jpg", "design3" )
     cv2.namedWindow("show", cv2.WINDOW_NORMAL)
     cv2.resizeWindow("show",400,800)
     cv2.imshow("show",rt)
