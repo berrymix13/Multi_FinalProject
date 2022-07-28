@@ -9,17 +9,15 @@ def fit_nail(hand_raw: str, hand_mask: str, design: str) -> np.ndarray :
     hand_mask           ->     손 이미지의 손톱 마스크 ( 현재는 파일명 )\n
     design                  ->      사용자 선택 네일 디자인 명 (영어)\n
     '''
-    
-    fdir = "C:/workspace/05.FinalProject/Multi_FinalProject/NailModel"
-    raw_hand = cv2.imread(f"{fdir}/{hand_raw}", cv2.IMREAD_UNCHANGED)
-    raw_mask = cv2.imread(f"{fdir}/{hand_mask}")
+    raw_hand = cv2.imread(f"./NailModel/{hand_raw}", cv2.IMREAD_UNCHANGED)
+    raw_mask = cv2.imread(f"./NailModel/{hand_mask}")
     raw_mask = cv2.resize(raw_mask, (raw_hand.shape[1],raw_hand.shape[0]))
     rows, cols = raw_hand.shape[:2]
     nTop = int(rows*0.009)
     nBottom = int(rows*0.04)
     nLeft = int(cols*0.04)
     nRight = int(cols*0.04)
-    nail_img = cv2.imread(f"{fdir}/design/{design}/nail.jpg")
+    nail_img = cv2.imread(f"./NailModel/design/{design}")
     crop_nail_img = rot_crop_box3(nail_img)
     crop_nail_img = [i for i in crop_nail_img if i is not None]
     
@@ -67,7 +65,7 @@ def fit_nail(hand_raw: str, hand_mask: str, design: str) -> np.ndarray :
     return raw_hand
 
 if __name__ == "__main__":
-    rt = fit_nail("design/ppt_hand.jpg", "design/ppt_hand_mask.jpg", "design_wint")
+    rt = fit_nail("model_hand.jpg", "model_hand_mask.jpg", "design (55).jpg")
     cv2.namedWindow("show", cv2.WINDOW_NORMAL)
     cv2.resizeWindow("show",400,800)
     cv2.imshow("show",rt)
