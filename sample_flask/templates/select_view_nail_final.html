@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather }} {% endblock %}
+{% block subtitle %}
+    
+{% endblock %}
+{% block content %}
+<div class="text-center">
+    <h3>원하는 네일 디자인</h3>
+</div>
+<hr>
+<div style="margin-bottom: 30px;" class="row">
+    <div class="col-6">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for key, value in nail_dict.items() %}       
+            <div class="card mb-4 shadow-sm" >             
+                <div class="card-header">
+                    <h5 class="my-0 font-weight-normal text-center" >{{value}}</h5>
+                </div>
+    
+                <div class="card-body">
+                    <a href="/select_view_nail_paint/{{f_name}}/{{key}}/{{nail_dict}}">
+                        <img style="height:240px;" src="{{url_for('static',filename='image/nail/'+key+'.jpg')}}" class="card-img-top" />
+                    </a>
+                </div>
+            </div>
+            {% endfor %}   
+           
+          </div>    
+    </div>
+
+    <div class="col-6">
+        <img style="height: 685px;" class="img-fluid" src="{{url_for('static',filename='nail_make/sample.jpg')}}">
+    </div>
+
+</div>
+
+    
+{% endblock %}

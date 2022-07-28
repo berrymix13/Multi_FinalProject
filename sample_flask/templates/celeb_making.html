@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather }} {% endblock %}
+{% block subtitle %}
+    
+{% endblock %}
+{% block content %}
+<div id="loading" class="text-center">
+    <img src="{{url_for('static',filename='image/loading.gif')}}">
+    <h4>Please wait...</h4>
+</div>
+<div id="celeb_make">
+    <div class="text-center">
+        <h3>연예인 네일</h3>
+    </div>
+    <hr>
+    <div class="row"> 
+        <div class="col-6 text-right">
+            <h3>연예인 사진</h3>
+            <img style="width: 250px; height:250px;" class="img-fluid" src="{{url_for('static',filename='image/celeb/'+celeb +'.jpg')}}">
+            <p></p>
+            <h3>네일</h3>
+            <img style="width: 250px; height:250px;" class="img-fluid" src="{{url_for('static',filename='image/nail/'+nail+'.jpg')}}">
+        </div>
+        <div class="col-6">
+            <img style="width: 400px; height:600px;" class="img-fluid" src="{{url_for('static',filename='nail_make/sample.jpg')}}">
+        </div>
+    </div>
+    <br>
+    <div class="text-center">
+        <button style="background-color: gray;" class="btn btn-primary mb-2" onclick="history.go(-2)">뒤로가기</button>
+    </div>
+</div>
+
+    
+{% endblock %}

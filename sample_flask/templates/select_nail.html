@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather }} {% endblock %}
+{% block subtitle %}
+    
+{% endblock %}
+{% block content %}
+<div class="text-center">
+    <h3>원하는 네일 디자인</h3>
+</div>
+<hr>
+    <div class="design_select">
+        <form action="/select_design_nail" method="post" enctype = "multipart/form-data">
+            <table class="table table-borderless">  
+                <tr>
+                    <td><label for="feature">색</label>
+                        
+                    </td>
+                    <td>
+                        {% for color in color_list %}
+                            <div class="form-check-inline">
+                                <input type="checkbox" class="form-check-input" name="color" value="{{color}}">{{color}}
+                            </div>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="feature">무드</label>
+                        
+                    </td>
+                    <td>
+                        {% for mood in mood_list %}
+                            <div class="form-check-inline">
+                                <input type="checkbox" class="form-check-input" name="mood" value="{{mood}}">{{mood}}                              
+                            </div>
+                            
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="feature">디자인</label>
+                        
+                    </td>
+                    <td>
+                        {% for design in design_list %}
+                            <div class="form-check-inline">
+                                <input type="checkbox" class="form-check-input" name="design" value="{{design}}">{{design}}
+                            </div>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="feature">계절</label>
+                        
+                    </td>
+                    <td>
+                        {% for weather in weather_list %}
+                            <div class="form-check-inline">
+                                <label class="form-check-label" for="boston{{loop.index}}">
+                                    <input type="checkbox" class="form-check-input" name="weather" value="{{weather}}">{{weather}}
+                                </label>
+                            </div>
+                        
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <button style="background-color: gray;" type="submit" class="btn btn-primary mr-3">선택</button>
+                        <button type="reset" class="btn btn-secondary">취소</button>
+                    </td>
+                </tr>
+            </table>		
+            <br>
+        
+        </form>
+    </div>
+
+{% endblock %}
