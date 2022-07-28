@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather }} {% endblock %}
+{% block subtitle %}
+    
+{% endblock %}
+{% block content %}
+<div id="sandle_pedi_list">
+    <div class="text-center">
+        <h3>샌들 색에 따른 페디 추천</h3>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-6">
+            <div class="text-center">
+                <input id="ones" type="radio" name="ones" value="ones" checked="checked">통일성
+                <input id="diverse" type="radio" name="diverse" value="diverse">다양성
+            </div>
+            
+            <div id="pedi_ones">
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+                    {% for key, value in one_dict.items() %}        
+                    <div  class="card mb-4 shadow-sm" >             
+                        <div class="card-header">
+                            <h5 class="my-0 font-weight-normal text-center" >{{value}}</h5>
+                        </div>
+            
+                        <div class="card-body">
+                            <a href="/foot_sandle_one/{{key}}/{{sandle_name}}/{{f_name}}/{{one_dict}}/{{diverse_dict}}">
+                                <img style="height: 230px;" src="{{url_for('static',filename='image/pedi/'+key+'.jpg')}}" class="card-img-top" />
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}   
+                   
+                </div>
+            </div>
+            <div id="pedi_diverse">
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+                    {% for key, value in diverse_dict.items() %}        
+                    <div  class="card mb-4 shadow-sm" >             
+                        <div class="card-header">
+                            <h5 class="my-0 font-weight-normal text-center" >{{value}}</h5>
+                        </div>
+            
+                        <div class="card-body">
+                            <a href="/foot_sandle_diverse/{{key}}/{{sandle_name}}/{{f_name}}/{{one_dict}}/{{diverse_dict}}">
+                                <img style="height: 230px;" src="{{url_for('static',filename='image/pedi/'+key+'.jpg')}}" class="card-img-top" />
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}   
+                   
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-6" style="text-align: center;">
+            <h5>샌들</h5>
+            <img class="rounded"  style="width: 200px; height: 200px; " src="{{url_for('static',filename='upload/'+sandle_name)}}">
+            <br>
+            <h5>나의 발 사진</h5>
+            <img class="img-fluid" style="width: 400px; height: 430px; " src="{{url_for('static',filename='adain/foot/'+f_name)}}">
+        </div>
+        
+    </div>
+    
+    
+</div>
+    
+{% endblock %}

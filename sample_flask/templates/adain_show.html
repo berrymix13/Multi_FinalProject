@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather }} {% endblock %}
+{% block subtitle %}
+    
+{% endblock %}
+{% block content %}
+<div class="text-center">
+    <h3>원하는 네일 디자인 만들기</h3>
+</div>
+<hr>
+<div class="row">
+    <div class="col-2">
+
+    </div>
+    <div class="col-4 text-center">
+        <h3>선택한 그림</h3>
+        <img class="img-fluid" src="{{url_for('static',filename='adain/'+final_path+draw_design)}}">
+        <p></p>
+        <h3>만들어진 디자인</h3>
+        <img class="img-fluid" src="{{url_for('static',filename='adain/result/practice_1.jpg')}}">
+    </div>
+    <div class="col-6">
+        <img class="img-fluid" src="{{url_for('static',filename='adain/final_result/practice_1.jpg')}}">
+    </div>
+</div>
+
+    
+{% endblock %}

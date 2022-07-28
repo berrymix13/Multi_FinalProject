@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather }} {% endblock %}
+{% block subtitle %}
+    
+{% endblock %}
+{% block content %}
+    <div id="loading" class="text-center">
+        <img src="static/image/loading.gif">
+        <h4>Please wait...</h4>
+    </div>
+    <div class="adain_design_select">
+        <div class="text-center">
+            <h3>원하는 네일 디자인 만들기</h3>
+        </div>
+        <hr>
+        <form id="adain_upload" action="/adain_design" method="post" enctype = "multipart/form-data">
+            <table class="table table-borderless">  
+                <tr>
+                    <td><label for="feature">쉐입</label>
+                        
+                    </td>
+                    <td>
+                        <div class="form-radio-inline">
+                        {% for shape in shape_list %}
+                            
+                                <input type="radio" class="form-radio-input" name="shape" value="{{shape}}">{{shape}}
+                            
+                        {% endfor %} 
+                        </div>                      
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="feature">패턴</label>
+                        
+                    </td>
+                    <td>
+                        <div class="form-radio-inline">
+                        {% for pattern in pattern_list %}
+                            
+                                <input type="radio" class="form-radio-input" name="pattern" value="{{pattern}}">{{pattern}}
+                            
+                        {% endfor %}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="feature">그림</label>
+                        
+                    </td>
+                    <td>
+                        <div class="form-radio-inline">
+                        {% for draw in draw_list %}
+                            
+                                <input type="radio" class="form-radio-input" id="{{draw}}" name="draw" value="{{draw}}">{{draw}}                              
+                                
+                        {% endfor %}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="feature">상세 정보</label>
+                    </td>
+                    <td>
+                        <div class="oriental">
+                            {% for oriental in oriental_list %}
+                                
+                                    <input type="radio" class="form-radio-input" name="oriental" value="{{oriental}}">
+                                        <img src="{{url_for('static',filename='adain/그림/동양화/'+oriental)}}">
+                                    </input>                           
+                                    
+                            {% endfor %}
+                        </div>
+                        <div class="cartoon">
+                            {% for cartoon in cartoon_list %}
+                                
+                                    <input type="radio" class="form-radio-input" name="cartoon" value="{{cartoon}}">
+                                        <img src="{{url_for('static',filename='adain/그림/만화/'+cartoon)}}">
+                                    </input>                           
+                                    
+                            {% endfor %}
+                        </div>
+                        <div class="western">
+                            {% for western in western_list %}
+                                
+                                    <input type="radio" class="form-radio-input" name="western" value="{{western}}">
+                                        <img src="{{url_for('static',filename='adain/그림/서양화/'+western)}}">
+                                    </input>                           
+                                    
+                            {% endfor %}
+                        </div>
+                        <div class="popart">
+                            {% for popart in popart_list %}
+                                
+                                    <input type="radio" class="form-radio-input" name="popart" value="{{popart}}">
+                                        <img src="{{url_for('static',filename='adain/그림/팝아트/'+popart)}}">
+                                    </input>                           
+                                    
+                            {% endfor %}
+                        </div>
+                    </td>     
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <button style="background-color: gray;" type="submit" class="btn btn-primary mr-2">선택</button>
+                        <button type="reset" class="btn btn-secondary">취소</button>
+                    </td>
+                </tr>
+                
+            </table>		
+            <br>
+        
+        </form>
+    </div>
+    
+{% endblock %}
