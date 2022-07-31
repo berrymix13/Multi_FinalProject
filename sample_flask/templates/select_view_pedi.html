@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    
+{% endblock %}
+{% block content %}
+
+<div id="loading" class="text-center">
+    <img  src="static/image/loading.gif">
+    <h4>Please wait...</h4>
+</div>
+<div id="select_pedi_list" >
+    <div class="text-center">
+        <h3>원하는 페디 디자인</h3>
+    </div>
+    <hr>
+    <div style="margin-bottom: 30px;" class="row">
+        <div class="col-6">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for key, value in f_pedi_dict.items() %}          
+                <div class="card mb-4 shadow-sm" >             
+                    <div class="card-header">
+                        <h5 class="my-0 font-weight-normal text-center" >{{value}}</h5>
+                    </div>
+        
+                    <div class="card-body">
+                        <a href="#">
+                            <img style="height:240px;" src="{{url_for('static',filename='image/pedi/'+key+'.jpg')}}" class="card-img-top" />
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}   
+               
+              </div>    
+        </div>
+        
+        <div class="col-6">
+            <div id="foot_upload_select" >
+                <form  id="myFoot_select" action="/upload_foot_select" method="POST" enctype = "multipart/form-data">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td style="text-align: center;">
+                                <label for="exampleFormControlFile1">******* 발 사진을 첨부해주세요 *******</label>
+                            </td>
+                        </tr>
+                        <tr> 
+                            <td  style="text-align: center;">
+                                
+                                <input style="margin-left: 20px;" type="file" name='file' class="real-upload" accept="image/*" required multiple>
+                                
+                            </td> 
+                        </tr>
+                        <td  style="text-align: center;">
+                            <button style="background-color: gray;" type="submit" class="btn btn-primary mb-2">전송</button>
+                            
+                        </td>
+                    </table>
+                    {% for key, value in f_pedi_dict.items() %}
+                    <input type="hidden" name="pedi_name_list" value="{{value}}">
+                    <input type="hidden" name="pedi_key_list" value="{{key}}">
+                    {% endfor %}  
+                </form>
+                
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+    
+ 
+        
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather }} {% endblock %}
+{% block subtitle %}
+    
+{% endblock %}
+{% block content %}
+<div id="loading" class="text-center">
+    <img src="static/image/loading.gif">
+    <h4>Please wait...</h4>
+</div>
+<div id="adain_ment" class="text-center">
+    <h3>원하는 네일 디자인 만들기</h3>
+    <hr>
+</div>
+
+<div class="row" id="adain_make_div">
+    
+    <div class="col-2">
+
+    </div>
+    <div class="col-4">
+        <img class="img-fluid" src="{{url_for('static',filename='adain/result/'+making+'.jpg')}}">
+    </div>
+    
+    <div class="col-4">
+        <form form id="myHand" action="/adain_making" method="POST" enctype = "multipart/form-data">
+            <div class="form-group" class="text-center">
+                <label for="exampleFormControlFile1">사진을 첨부해주세요</label>
+                <input type="file" name="file" class="text-center form-control-file " id="exampleFormControlFile1">
+                <input type="hidden" name="making" value="{{making}}">
+                <input type="hidden" name="shape" value="{{user_shape}}">
+                <input type="hidden" name="draw_design" value="{{draw_design}}">
+                <input type="hidden" name="final_path" value="{{final_path}}">
+            </div>
+            <button style="background-color: gray;" type="submit" class="btn btn-primary mb-2">전송</button>
+        </form>
+    </div>
+    <div class="col-2">
+
+    </div>
+</div>
+
+    
+{% endblock %}

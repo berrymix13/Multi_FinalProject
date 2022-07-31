@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather }} {% endblock %}
+{% block subtitle %}
+    
+{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-2">
+
+    </div>
+    <div class="col-4 text-center">
+        <h3>선택한 그림</h3>
+        <img class="img-fluid" src="{{url_for('static',filename='adain/그림/서양화/서양화 (2).jpg')}}">
+        <p></p>
+        <h3>만들어진 디자인</h3>
+        <img class="img-fluid" src="{{url_for('static',filename='adain/result/practice_1.jpg')}}">
+    </div>
+    <div class="col-6">
+        <img class="img-fluid" src="{{url_for('static',filename='adain/final_result/practice_1.jpg')}}">
+    </div>
+</div>
+
+    
+{% endblock %}
