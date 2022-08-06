@@ -1,0 +1,19 @@
+{ "color_set":  [
+    {
+        "red": ["red", "yellow", "orange", "gold"], 
+        "orange": ["orange", "yellow", "green", "beige"],
+        "yellow": ["yellow", "beige", "gold", "orange"],
+        "blue": ["blue", "white", "gray", "silver" ],
+        "green": ["green", "beige", "brown","yellow" ],
+        "purple": ["purple", "pink", "black","blue" ],
+        "pink": ["pink", "red", "white", "beige"],
+        "gold": ["gold", "yellow", "beige", "orange"],
+        "black": ["black", "white", "gray", "silver"],
+        "white": ["white", "gray", "silver", "beige"], 
+        "beige": ["beige", "brown", "pink", "white" ],
+        "brown": ["brown", "beige", "pink", "white" ],
+        "gray": ["gray", "silver", "white", "black"],
+        "silver": ["silver", "gray", "white", "black"]
+    }
+
+]}
