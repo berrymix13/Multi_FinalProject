@@ -1,0 +1,70 @@
+@font-face { 
+    font-family: "Elice";
+    src: url("font/EliceDigitalBaeum_Regular.ttf") format("truetype");
+    font-weight: normal;
+  } 
+@font-face { 
+    font-family: "Oseong";
+    src: url("font/OSeongandHanEum-Regular.ttf") format("truetype");
+    font-weight: normal;
+  } 
+@font-face { 
+    font-family: "UaP";
+    src: url("font/UandPeople Gothic UNI .ttf") format("truetype");
+    font-weight: normal;
+  } 
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: UaP;
+}
+
+.animated-text{  
+    color: #fff;
+    /* position:absolute; */
+    
+    /* left: 50%; */
+
+    /* transform: translate(-50%, -50%); */
+    background-color: black;
+    height: 50px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.line{
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 30px;
+    line-height: 50px;
+    cursor:pointer;
+}
+
+.line:first-child{
+    animation: anim 20s infinite;
+}
+
+@keyframes anim {
+    0%{
+        margin-top:  0;
+    }
+    16%{
+        margin-top: -50px;
+    }
+    33%{
+        margin-top: -100px;
+    }
+    50%{
+        margin-top: -150px;
+    }
+    66%{
+        margin-top: -100px;
+    }
+    82%{
+        margin-top: -50px;
+    }
+    100%{
+        margin-top: 0;
+    }
+}
