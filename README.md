@@ -28,7 +28,7 @@ Pytorch를 활용한 U-net model
 
 <br></br><br></br>
 
-###  네일 디자인 합성
+###  <a href="https://github.com/9mynamemj7/Multi_FinalProject/tree/master/NailModel/fit_nail">네일 디자인 합성</a>
 ___
 <body>
  <table border="1" width="900" height="600" align="center">
@@ -45,7 +45,7 @@ ___
 
 <br></br><br></br>
 
-### 네일 디자인 생성
+### <a href="https://github.com/9mynamemj7/Multi_FinalProject/tree/master/NailModel/StyleTransform">네일 디자인 생성</a>
 ___
 
 - Style Transfer
